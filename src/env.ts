@@ -20,6 +20,6 @@ export const SERVER_URL = import.meta.env.VITE_SERVER_URL
 
 /**
  * 정적 페이지 모드 여부
- * true일 경우 서버 연동 기능(방명록 등)이 비활성화됩니다.
+ * GitHub Pages 정적 배포에서는 서버 연동 기능(방명록 등)을 비활성화합니다.
  */
-export const STATIC_ONLY = import.meta.env.VITE_STATIC_ONLY === "true"
+export const STATIC_ONLY = true

@@ -62,9 +62,8 @@ cp .env.example .env
   - 서버 소스코드: https://github.com/juhonamnam/wedding-invitation-server
   - 설정하지 않을 경우 소스코드상에 고정된 방명록만 보여줍니다.
     - 결혼식 끝난 이후 archive 용으로 사용 가능합니다. 지금까지 올라왔던 모든 방명록을 `offlineGuestBook.json`에 소스코드로 저장하여 read only로 보관해보세요.
-- `VITE_STATIC_ONLY`
-  - 방명록과 참석 의사 전달 기능은 별도의 서버를 호스팅해야 합니다.
-  - 이 기능을 사용하지 않고 정적 웹사이트로만 운영하려면 이 환경변수를 `true`로 설정합니다.
+
+이 저장소는 GitHub Pages 정적 배포 기준으로 서버 연동 기능(방명록, 참석 의사 전달)을 비활성화하도록 설정되어 있습니다.
 
 4. 개발 서버 실행:
 
@@ -111,9 +110,6 @@ npm run dev
    - Secrets:
      - `VITE_KAKAO_MAP_APP_KEY`
      - `VITE_KAKAO_SDK_JS_KEY`
-   - Variables:
-     - `VITE_SERVER_URL`
-     - `VITE_STATIC_ONLY`
 
 ### 다른 호스팅 플랫폼
 
@@ -139,7 +135,7 @@ npm run build
 - CRA에서 Vite로 마이그레이션
 - `yarn` 대신 `npm` 사용
 - `src/const.ts`의 상수가 적용되지 않던 부분 (ex. `index.html`, `manifest.json`) 개선
-- `STATIC_ONLY` 환경변수 설정을 통해 별도의 서버를 필요로 하는 기능을 비활성화 가능
+- GitHub Pages 정적 배포 기준으로 별도의 서버를 필요로 하는 기능을 비활성화 가능
 - [Hotfix] Github의 환경변수명에 `VITE_` 접두사가 붙지 않아 혼란이 있었던 문제 수정
 - [Hotfix] Naver Map API의 최신 업데이트 반영
 

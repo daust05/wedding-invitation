@@ -44,7 +44,6 @@ The project uses the following environment variables (defined in `.env`):
 - `VITE_KAKAO_SDK_JS_KEY`: JavaScript key for Kakao SDK.
 - `VITE_KAKAO_MAP_APP_KEY`: JavaScript key for Kakao Maps. Falls back to `VITE_KAKAO_SDK_JS_KEY` when omitted.
 - `VITE_SERVER_URL`: URL for the guestbook/attendance backend.
-- `VITE_STATIC_ONLY`: Set to `true` to disable backend-dependent features (Guestbook, Attendance).
 
 ---
 
