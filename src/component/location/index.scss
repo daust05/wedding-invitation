@@ -59,6 +59,18 @@
         opacity: 0.5;
       }
     }
+    .map-fallback {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 202;
+      width: 100%;
+      height: 100%;
+      background-color: var(--alt-bg-color);
+      color: var(--theme-color);
+      font-size: 1rem;
+      text-decoration: underline;
+    }
     .map-inner {
       height: 100%;
       width: 100%;

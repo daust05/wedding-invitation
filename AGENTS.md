@@ -4,7 +4,7 @@ This document provides essential context and instructions for AI agents working 
 
 ## Project Overview
 
-A modern, responsive mobile wedding invitation template built with **React 19**, **Vite 7**, **TypeScript**, and **SASS**. It features a clean UI with scroll-triggered animations and integrations with Naver Maps and Kakao SDK.
+A modern, responsive mobile wedding invitation template built with **React 19**, **Vite 7**, **TypeScript**, and **SASS**. It features a clean UI with scroll-triggered animations and integrations with Kakao Maps and Kakao SDK.
 
 ### Core Technologies
 - **Frontend Framework:** React 19
@@ -12,7 +12,7 @@ A modern, responsive mobile wedding invitation template built with **React 19**,
 - **Styling:** SASS (SCSS) with CSS Variables
 - **Date Management:** Day.js
 - **Icons:** SVG (via `vite-plugin-svgr`)
-- **Maps:** Naver Maps API
+- **Maps:** Kakao Maps API
 - **Social Sharing:** Kakao SDK
 
 ---
@@ -25,7 +25,7 @@ The project follows a component-based architecture where sections of the invitat
 - `src/App.tsx`: Main orchestrator of the sections.
 - `src/component/`: Contains all UI components. Each component typically has its own `.tsx` and `.scss` file.
   - `modal/`: Custom modal management system with focus trap.
-  - `store/`: Simple state management for external SDKs (Naver, Kakao).
+  - `store/`: Simple state management for external SDKs (Kakao Maps, Kakao SDK).
   - `lazyDiv/`: A wrapper component that adds fade-in animations when scrolled into view.
 - `vite.config.ts`: Configured to inject constants from `src/const.ts` directly into `index.html` and `manifest.json`.
 
@@ -41,8 +41,8 @@ The project follows a component-based architecture where sections of the invitat
 
 ### Environment Variables
 The project uses the following environment variables (defined in `.env`):
-- `VITE_NAVER_MAP_CLIENT_ID`: Client ID for Naver Maps.
 - `VITE_KAKAO_SDK_JS_KEY`: JavaScript key for Kakao SDK.
+- `VITE_KAKAO_MAP_APP_KEY`: JavaScript key for Kakao Maps. Falls back to `VITE_KAKAO_SDK_JS_KEY` when omitted.
 - `VITE_SERVER_URL`: URL for the guestbook/attendance backend.
 - `VITE_STATIC_ONLY`: Set to `true` to disable backend-dependent features (Guestbook, Attendance).
 
@@ -72,5 +72,5 @@ Always check `src/const.ts` before hardcoding any wedding-related information. N
 
 ## Testing & Validation
 - Ensure all changes are tested on both desktop and mobile viewports.
-- Verify that social sharing (Kakao) and maps (Naver) work correctly with the provided environment variables.
+- Verify that social sharing (Kakao) and maps (Kakao Maps) work correctly with the provided environment variables.
 - If modifying the build process, ensure `manifest-inject` and HTML injection in `vite.config.ts` still function as expected.

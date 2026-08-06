@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react"
-import { useKakao, useNaver } from "../store"
-import nmapIcon from "../../icons/nmap-icon.png"
+import { useKakao, useKakaoMap } from "../store"
+import markerIcon from "../../icons/marker-icon.svg"
 import knaviIcon from "../../icons/knavi-icon.png"
 import tmapIcon from "../../icons/tmap-icon.png"
 import LockIcon from "../../icons/lock-icon.svg?react"
@@ -11,23 +11,23 @@ import {
   NMAP_PLACE_ID,
   WEDDING_HALL_POSITION,
 } from "../../const"
-import { NAVER_MAP_CLIENT_ID } from "../../env"
+import { KAKAO_MAP_APP_KEY } from "../../env"
 
 /**
- * 지도를 표시하고 길찾기 앱(네이버, 카카오, 티맵) 연동 기능을 제공하는 컴포넌트입니다.
+ * 지도를 표시하고 길찾기 앱(카카오 지도, 카카오 내비, 티맵) 연동 기능을 제공하는 컴포넌트입니다.
  *
  * @returns {JSX.Element} 지도 컴포넌트
  */
 export const Map = () => {
-  // 네이버 지도 클라이언트 ID가 설정되어 있을 때만 지도를 렌더링합니다.
-  return NAVER_MAP_CLIENT_ID ? <NaverMap /> : <div>Map is not available</div>
+  // 카카오 지도 키가 설정되어 있을 때만 지도를 렌더링합니다.
+  return KAKAO_MAP_APP_KEY ? <KakaoMap /> : <div>Map is not available</div>
 }
 
 /**
- * 네이버 지도를 실제로 렌더링하는 내부 컴포넌트입니다.
+ * 카카오 지도를 실제로 렌더링하는 내부 컴포넌트입니다.
  */
-const NaverMap = () => {
-  const naver = useNaver()
+const KakaoMap = () => {
+  const { kakaoMap, kakaoMapLoadFailed } = useKakaoMap()
   const kakao = useKakao()
   const ref = useRef<HTMLDivElement>(null)
 
@@ -51,36 +51,57 @@ const NaverMap = () => {
   }
 
   useEffect(() => {
-    // 네이버 지도 SDK가 로드되면 지도를 초기화합니다.
-    if (naver) {
-      const map = new naver.maps.Map(ref.current, {
-        center: new naver.maps.LatLng(
-          WEDDING_HALL_POSITION[1],
-          WEDDING_HALL_POSITION[0],
-        ),
-        zoom: 17,
+    // 카카오 지도 SDK가 로드되면 지도를 초기화합니다.
+    if (kakaoMap && ref.current) {
+      if (
+        typeof kakaoMap.maps?.LatLng !== "function" ||
+        typeof kakaoMap.maps?.Map !== "function" ||
+        typeof kakaoMap.maps?.Marker !== "function"
+      ) {
+        return
+      }
+
+      const mapContainer = ref.current
+      const center = new kakaoMap.maps.LatLng(
+        WEDDING_HALL_POSITION[1],
+        WEDDING_HALL_POSITION[0],
+      )
+      const map = new kakaoMap.maps.Map(mapContainer, {
+        center,
+        level: 3,
       })
 
       // 마커 추가
-      new naver.maps.Marker({
-        position: new naver.maps.LatLng(
-          WEDDING_HALL_POSITION[1],
-          WEDDING_HALL_POSITION[0],
-        ),
+      new kakaoMap.maps.Marker({
+        position: center,
         map,
       })
 
       return () => {
-        map.destroy()
+        mapContainer.replaceChildren()
       }
     }
-  }, [naver])
+  }, [kakaoMap])
 
   return (
     <>
       <div className="map-wrapper">
+        {kakaoMapLoadFailed && (
+          <button
+            className="map-fallback"
+            onClick={() => {
+              window.open(
+                `https://map.kakao.com/link/map/${KMAP_PLACE_ID}`,
+                "_blank",
+              )
+            }}
+          >
+            카카오 지도에서 위치 보기
+          </button>
+        )}
+
         {/* 잠금 상태일 때 오버레이 표시 */}
-        {locked && (
+        {locked && !kakaoMapLoadFailed && (
           <div
             className="lock"
             onTouchStart={() => {
@@ -115,18 +136,20 @@ const NaverMap = () => {
         )}
 
         {/* 잠금 해제 버튼 */}
-        <button
-          className={"lock-button" + (locked ? "" : " unlocked")}
-          onClick={() => {
-            if (lockMessageTimeout.current !== null) {
-              clearTimeout(lockMessageTimeout.current)
-            }
-            setShowLockMessage(false)
-            setLocked((locked) => !locked)
-          }}
-        >
-          {locked ? <LockIcon /> : <UnlockIcon />}
-        </button>
+        {!kakaoMapLoadFailed && (
+          <button
+            className={"lock-button" + (locked ? "" : " unlocked")}
+            onClick={() => {
+              if (lockMessageTimeout.current !== null) {
+                clearTimeout(lockMessageTimeout.current)
+              }
+              setShowLockMessage(false)
+              setLocked((locked) => !locked)
+            }}
+          >
+            {locked ? <LockIcon /> : <UnlockIcon />}
+          </button>
+        )}
 
         {/* 지도가 렌더링될 실제 요소 */}
         <div className="map-inner" ref={ref}></div>
@@ -134,24 +157,16 @@ const NaverMap = () => {
 
       {/* 내비게이션 앱 연결 버튼 모음 */}
       <div className="navigation">
-        {/* 네이버 지도 연동 */}
+        {/* 네이버 지도 웹 링크 연동 */}
         <button
           onClick={() => {
-            switch (checkDevice()) {
-              case "ios":
-              case "android":
-                window.open(`nmap://place?id=${NMAP_PLACE_ID}`, "_self")
-                break
-              default:
-                window.open(
-                  `https://map.naver.com/p/entry/place/${NMAP_PLACE_ID}`,
-                  "_blank",
-                )
-                break
-            }
+            window.open(
+              `https://map.naver.com/p/entry/place/${NMAP_PLACE_ID}`,
+              "_blank",
+            )
           }}
         >
-          <img src={nmapIcon} alt="naver-map-icon" />
+          <img src={markerIcon} alt="naver-map-icon" />
           네이버 지도
         </button>
 

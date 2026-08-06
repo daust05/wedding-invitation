@@ -1,14 +1,16 @@
 /**
- * 네이버 지도 클라이언트 ID
- * .env 파일의 VITE_NAVER_MAP_CLIENT_ID에서 가져옵니다.
- */
-export const NAVER_MAP_CLIENT_ID = import.meta.env.VITE_NAVER_MAP_CLIENT_ID
-
-/**
  * 카카오 SDK 자바스크립트 키
- * .env 파일의 VITE_KAKAO_SDK_JS_KEY에서 가져옵니다.
+ * .env 파일의 VITE_KAKAO_SDK_JS_KEY에서 가져오며,
+ * 카카오 지도 및 카카오 내비/공유 SDK에서 함께 사용합니다.
  */
 export const KAKAO_SDK_JS_KEY = import.meta.env.VITE_KAKAO_SDK_JS_KEY
+
+/**
+ * 카카오 지도 자바스크립트 키
+ * 별도 설정이 없으면 카카오 SDK 자바스크립트 키를 함께 사용합니다.
+ */
+export const KAKAO_MAP_APP_KEY =
+  import.meta.env.VITE_KAKAO_MAP_APP_KEY || KAKAO_SDK_JS_KEY
 
 /**
  * 백엔드 서버 URL (방명록 기능 등에 사용)

@@ -51,11 +51,11 @@ npm install
 cp .env.example .env
 ```
 
-- `VITE_NAVER_MAP_CLIENT_ID`
-  - 웨딩홀 위치를 표시하기 위한 네이버 지도 ID 발급
-  - Naver Cloud Platform에서 발급 가능 (Dynamic Map API)
+- `VITE_KAKAO_MAP_APP_KEY`
+  - 카카오 지도를 표시하기 위한 KAKAO Maps JavaScript 키
+  - 설정하지 않으면 `VITE_KAKAO_SDK_JS_KEY` 값을 함께 사용합니다.
 - `VITE_KAKAO_SDK_JS_KEY`
-  - 카카오톡 공유하기 기능을 위한 KAKAO SDK API 키
+  - 카카오 내비, 카카오톡 공유하기 기능을 위한 KAKAO SDK API 키
   - Kakao Developers에서 발급 가능 (JavaScript Key)
 - `VITE_SERVER_URL`
   - 방명록과 참석 의사 전달 등을 위한 서버의 URL
@@ -109,7 +109,7 @@ npm run dev
 
 4. Fork된 저장소의 Settings > Secrets and variables > Actions에서 환경변수 추가 (각 환경변수에 대한 설명은 위 환경변수 설정 참고)
    - Secrets:
-     - `VITE_NAVER_MAP_CLIENT_ID`
+     - `VITE_KAKAO_MAP_APP_KEY`
      - `VITE_KAKAO_SDK_JS_KEY`
    - Variables:
      - `VITE_SERVER_URL`
