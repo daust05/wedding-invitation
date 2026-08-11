@@ -1,10 +1,8 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useKakao, useKakaoMap } from "../store"
 import markerIcon from "../../icons/marker-icon.svg"
 import knaviIcon from "../../icons/knavi-icon.png"
 import tmapIcon from "../../icons/tmap-icon.png"
-import LockIcon from "../../icons/lock-icon.svg?react"
-import UnlockIcon from "../../icons/unlock-icon.svg?react"
 import {
   KMAP_PLACE_ID,
   LOCATION,
@@ -30,11 +28,6 @@ const KakaoMap = () => {
   const { kakaoMap, kakaoMapLoadFailed } = useKakaoMap()
   const kakao = useKakao()
   const ref = useRef<HTMLDivElement>(null)
-
-  // 모바일에서 스크롤 중 지도가 조작되는 것을 방지하기 위한 잠금 상태
-  const [locked, setLocked] = useState(true)
-  const [showLockMessage, setShowLockMessage] = useState(false)
-  const lockMessageTimeout = useRef<number | null>(null)
 
   /**
    * 사용자 기기 종류(iOS, Android 등)를 확인합니다.
@@ -97,57 +90,6 @@ const KakaoMap = () => {
             }}
           >
             카카오 지도에서 위치 보기
-          </button>
-        )}
-
-        {/* 잠금 상태일 때 오버레이 표시 */}
-        {locked && !kakaoMapLoadFailed && (
-          <div
-            className="lock"
-            onTouchStart={() => {
-              setShowLockMessage(true)
-              if (lockMessageTimeout.current !== null) {
-                clearTimeout(lockMessageTimeout.current)
-              }
-              lockMessageTimeout.current = window.setTimeout(
-                () => setShowLockMessage(false),
-                3000,
-              )
-            }}
-            onMouseDown={() => {
-              setShowLockMessage(true)
-              if (lockMessageTimeout.current !== null) {
-                clearTimeout(lockMessageTimeout.current)
-              }
-              lockMessageTimeout.current = window.setTimeout(
-                () => setShowLockMessage(false),
-                3000,
-              )
-            }}
-          >
-            {showLockMessage && (
-              <div className="lock-message">
-                <LockIcon /> 자물쇠 버튼을 눌러
-                <br />
-                터치 잠금 해제 후 확대 및 이동해 주세요.
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* 잠금 해제 버튼 */}
-        {!kakaoMapLoadFailed && (
-          <button
-            className={"lock-button" + (locked ? "" : " unlocked")}
-            onClick={() => {
-              if (lockMessageTimeout.current !== null) {
-                clearTimeout(lockMessageTimeout.current)
-              }
-              setShowLockMessage(false)
-              setLocked((locked) => !locked)
-            }}
-          >
-            {locked ? <LockIcon /> : <UnlockIcon />}
           </button>
         )}
 
