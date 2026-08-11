@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
-import { useKakao, useKakaoMap } from "../store"
-import markerIcon from "../../icons/marker-icon.svg"
-import knaviIcon from "../../icons/knavi-icon.png"
+import { useKakaoMap } from "../store"
+import kakaoMapIcon from "../../icons/knavi-icon.png"
+import naverMapIcon from "../../icons/nmap-icon.png"
 import tmapIcon from "../../icons/tmap-icon.png"
 import {
   KMAP_PLACE_ID,
@@ -12,7 +12,7 @@ import {
 import { KAKAO_MAP_APP_KEY } from "../../env"
 
 /**
- * 지도를 표시하고 길찾기 앱(카카오 지도, 카카오 내비, 티맵) 연동 기능을 제공하는 컴포넌트입니다.
+ * 지도를 표시하고 길찾기 앱(네이버 지도, 카카오맵, 티맵) 연동 기능을 제공하는 컴포넌트입니다.
  *
  * @returns {JSX.Element} 지도 컴포넌트
  */
@@ -26,8 +26,27 @@ export const Map = () => {
  */
 const KakaoMap = () => {
   const { kakaoMap, kakaoMapLoadFailed } = useKakaoMap()
-  const kakao = useKakao()
   const ref = useRef<HTMLDivElement>(null)
+
+  const openTmapRoute = () => {
+    const params = new URLSearchParams({
+      goalx: WEDDING_HALL_POSITION[0].toString(),
+      goaly: WEDDING_HALL_POSITION[1].toString(),
+      goalname: LOCATION,
+    })
+    const fallbackTimeout = window.setTimeout(() => {
+      if (!document.hidden) {
+        alert("티맵 앱이 설치된 모바일에서 확인하실 수 있습니다.")
+      }
+    }, 2000)
+    const clearFallback = () => {
+      clearTimeout(fallbackTimeout)
+      document.removeEventListener("visibilitychange", clearFallback)
+    }
+
+    document.addEventListener("visibilitychange", clearFallback)
+    window.location.href = `tmap://route?${params.toString()}`
+  }
 
   /**
    * 사용자 기기 종류(iOS, Android 등)를 확인합니다.
@@ -108,35 +127,21 @@ const KakaoMap = () => {
             )
           }}
         >
-          <img src={markerIcon} alt="naver-map-icon" />
+          <img src={naverMapIcon} alt="naver-map-icon" />
           네이버 지도
         </button>
 
-        {/* 카카오 내비 연동 */}
+        {/* 카카오맵 웹 링크 연동 */}
         <button
           onClick={() => {
-            switch (checkDevice()) {
-              case "ios":
-              case "android":
-                if (kakao)
-                  kakao.Navi.start({
-                    name: LOCATION,
-                    x: WEDDING_HALL_POSITION[0],
-                    y: WEDDING_HALL_POSITION[1],
-                    coordType: "wgs84",
-                  })
-                break
-              default:
-                window.open(
-                  `https://map.kakao.com/link/map/${KMAP_PLACE_ID}`,
-                  "_blank",
-                )
-                break
-            }
+            window.open(
+              `https://map.kakao.com/link/map/${KMAP_PLACE_ID}`,
+              "_blank",
+            )
           }}
         >
-          <img src={knaviIcon} alt="kakao-navi-icon" />
-          카카오 내비
+          <img src={kakaoMapIcon} alt="kakao-map-icon" />
+          카카오맵
         </button>
 
         {/* 티맵 연동 */}
@@ -145,12 +150,7 @@ const KakaoMap = () => {
             switch (checkDevice()) {
               case "ios":
               case "android": {
-                const params = new URLSearchParams({
-                  goalx: WEDDING_HALL_POSITION[0].toString(),
-                  goaly: WEDDING_HALL_POSITION[1].toString(),
-                  goalName: LOCATION,
-                })
-                window.open(`tmap://route?${params.toString()}`, "_self")
+                openTmapRoute()
                 break
               }
               default: {

@@ -1,7 +1,7 @@
 /**
  * 카카오 SDK 자바스크립트 키
  * .env 파일의 VITE_KAKAO_SDK_JS_KEY에서 가져오며,
- * 카카오 지도 및 카카오 내비/공유 SDK에서 함께 사용합니다.
+ * 카카오 지도 및 카카오톡 공유 SDK에서 함께 사용합니다.
  */
 export const KAKAO_SDK_JS_KEY = import.meta.env.VITE_KAKAO_SDK_JS_KEY
 

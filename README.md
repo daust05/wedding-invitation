@@ -55,7 +55,7 @@ cp .env.example .env
   - 카카오 지도를 표시하기 위한 KAKAO Maps JavaScript 키
   - 설정하지 않으면 `VITE_KAKAO_SDK_JS_KEY` 값을 함께 사용합니다.
 - `VITE_KAKAO_SDK_JS_KEY`
-  - 카카오 내비, 카카오톡 공유하기 기능을 위한 KAKAO SDK API 키
+  - 카카오 지도, 카카오톡 공유하기 기능을 위한 KAKAO SDK API 키
   - Kakao Developers에서 발급 가능 (JavaScript Key)
 - `VITE_SERVER_URL`
   - 방명록과 참석 의사 전달 등을 위한 서버의 URL
