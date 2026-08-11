@@ -38,7 +38,7 @@ export const LOCATION = "인천 아시아드웨딩컨벤션 비아벨라홀"
  * 예식 장소 상세 주소
  */
 export const LOCATION_ADDRESS =
-  "인천광역시 서구 염곡로 725 3번게이트 (연희동 826번지) 인천아시아드주경기장 비아벨라홀"
+  "인천광역시 서해구 염곡로 725 3번게이트 (연희동 826번지) 인천아시아드주경기장 비아벨라홀"
 
 /**
  * 카카오톡 공유 시 사용할 위치 정보 주소
@@ -83,19 +83,19 @@ export const BRIDE_INFO = [
     relation: "신부",
     name: BRIDE_FULLNAME,
     phone: "010-3647-7697",
-    account: "우리 1002161016037",
+    account: "우리 1002 161 016037",
   },
   {
     relation: "신부 아버지",
     name: BRIDE_FATHER,
     phone: "010-4037-7697",
-    account: "농협 179083 51 012110 김대중",
+    account: "농협 179083 51 012110",
   },
   {
     relation: "신부 어머니",
     name: BRIDE_MOTHER,
     phone: "010-3076-7697",
-    account: "농협 401142 56 143111 김미정",
+    account: "농협 401142 56 143111",
   },
 ]
 

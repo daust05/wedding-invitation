@@ -1,0 +1,42 @@
+.bgm-player {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 5;
+
+  @media print {
+    display: none;
+  }
+
+  .bgm-player-button {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.92);
+    border: 0.05rem solid var(--alt-color);
+    box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.45;
+    }
+
+    &.playing {
+      background-color: var(--alt-color);
+
+      svg {
+        fill: var(--white-color);
+      }
+    }
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      fill: var(--alt-color);
+    }
+  }
+}

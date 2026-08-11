@@ -8,6 +8,8 @@ import { createHtmlPlugin } from "vite-plugin-html"
 import {
   GROOM_FULLNAME,
   BRIDE_FULLNAME,
+  GROOM_FIRSTNAME,
+  BRIDE_FIRSTNAME,
   WEDDING_DATE,
   LOCATION,
   WEDDING_DATE_FORMAT,
@@ -34,6 +36,8 @@ export default defineConfig({
         data: {
           GROOM_FULLNAME,
           BRIDE_FULLNAME,
+          GROOM_FIRSTNAME,
+          BRIDE_FIRSTNAME,
           DESCRIPTION: `${WEDDING_DATE.format(WEDDING_DATE_FORMAT)} ${LOCATION}`,
         },
       },
@@ -45,6 +49,8 @@ export default defineConfig({
         const processed = content
           .replace(/<%= GROOM_FULLNAME %>/g, GROOM_FULLNAME)
           .replace(/<%= BRIDE_FULLNAME %>/g, BRIDE_FULLNAME)
+          .replace(/<%= GROOM_FIRSTNAME %>/g, GROOM_FIRSTNAME)
+          .replace(/<%= BRIDE_FIRSTNAME %>/g, BRIDE_FIRSTNAME)
         fs.writeFileSync(`${distFolder}/manifest.json`, processed)
       },
     },

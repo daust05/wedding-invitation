@@ -80,6 +80,8 @@ export const Location = () => {
             <br />
             - 주차 요금은 무료입니다.
             <br />
+            - 3번 게이트 앞 주차장을 이용해 주세요.
+            <br />
           </div>
           <div />
           <div className="content">
