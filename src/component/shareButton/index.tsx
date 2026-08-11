@@ -13,6 +13,7 @@ import { LazyDiv } from "../lazyDiv"
 import { useKakao } from "../store"
 
 const baseUrl = import.meta.env.BASE_URL
+const previewImagePath = "preview_image.png?v=20260811"
 
 const getShareUrl = (path = "") => {
   return new URL(`${baseUrl}${path}`, window.location.origin).toString()
@@ -45,7 +46,7 @@ export const ShareButton = () => {
               title: `${GROOM_FULLNAME} ❤️ ${BRIDE_FULLNAME}의 결혼식에 초대합니다.`,
               description:
                 WEDDING_DATE.format(WEDDING_DATE_FORMAT) + "\n" + LOCATION,
-              imageUrl: getShareUrl("preview_image.png"),
+              imageUrl: getShareUrl(previewImagePath),
               link: {
                 mobileWebUrl: getShareUrl(),
                 webUrl: getShareUrl(),
