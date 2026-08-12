@@ -20,6 +20,7 @@ export const COVER_IMAGE = image1
  * 갤러리에 표시될 이미지 목록
  */
 export const GALLERY_IMAGES = [
+  image9,
   image2,
   image3,
   image4,
@@ -27,7 +28,6 @@ export const GALLERY_IMAGES = [
   image6,
   image7,
   image8,
-  image9,
   image10,
   image11,
   image12,

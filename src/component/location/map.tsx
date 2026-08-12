@@ -1,8 +1,10 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useKakaoMap } from "../store"
 import kakaoMapIcon from "../../icons/knavi-icon.png"
 import naverMapIcon from "../../icons/nmap-icon.png"
 import tmapIcon from "../../icons/tmap-icon.png"
+import LockIcon from "../../icons/lock-icon.svg?react"
+import UnlockIcon from "../../icons/unlock-icon.svg?react"
 import {
   KMAP_PLACE_ID,
   LOCATION,
@@ -27,6 +29,7 @@ export const Map = () => {
 const KakaoMap = () => {
   const { kakaoMap, kakaoMapLoadFailed } = useKakaoMap()
   const ref = useRef<HTMLDivElement>(null)
+  const [locked, setLocked] = useState(true)
 
   const openTmapRoute = () => {
     const params = new URLSearchParams({
@@ -109,6 +112,21 @@ const KakaoMap = () => {
             }}
           >
             카카오 지도에서 위치 보기
+          </button>
+        )}
+
+        {locked && !kakaoMapLoadFailed && <div className="lock" />}
+
+        {!kakaoMapLoadFailed && (
+          <button
+            type="button"
+            className={"lock-button" + (locked ? "" : " unlocked")}
+            aria-label={locked ? "지도 터치 잠금 해제" : "지도 터치 잠금"}
+            onClick={() => {
+              setLocked((locked) => !locked)
+            }}
+          >
+            {locked ? <LockIcon /> : <UnlockIcon />}
           </button>
         )}
 
