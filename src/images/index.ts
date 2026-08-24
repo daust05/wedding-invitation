@@ -10,6 +10,7 @@ import image9 from "./image9.jpeg"
 import image10 from "./image10.jpeg"
 import image11 from "./image11.jpeg"
 import image12 from "./image12.jpeg"
+import image13 from "./image13.jpeg"
 
 /**
  * 메인 커버 이미지
